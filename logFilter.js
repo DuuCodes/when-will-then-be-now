@@ -11,13 +11,16 @@ function filterLogsByEnv(logs, env) {
 }
 
 function filterLogsOnDate(logs, dateFilter) {
-  const filteredLogs = []
+  
   const parsedDateFilter = new Date(dateFilter)
 
   logs.forEach((log) => {
-    const timestampDate = new Date(log.timestamp)
-
-    if (parsedDateFilter.toDateString() === timestampDate.toDateString()) {
+    const timestampDate = new Date (logs, dateFilter) 
+    
+    if (parsedDateFilter.getUTCDate() === timestampDate.getUTCDate(),
+    parsedDateFilter.getUTCMonth() === timestampDate.getUTCMonth(),
+    parsedDateFilter.getUTCFullYear() === timestampDate.getUTCFullYear()) {
+      
       filteredLogs.push(log)
     }
   })
@@ -29,7 +32,7 @@ function filterLogs(logs, env, dateFilter) {
   const envLogs = filterLogsByEnv(logs, env)
 
   if (dateFilter) {
-    return filterLogsOnDate(envLogs, dateFilter)
+    return filterLogs(envLogs, dateFilter)
   } else {
     return envLogs
   }
